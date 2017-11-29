@@ -6,13 +6,14 @@ from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Convolution2D, MaxPooling2D
 from keras.utils import np_utils
 from keras import backend as K
+import PicToArray
 
 # 全局变量
 batch_size = 128
 nb_classes = 10
-epochs = 12
+epochs = 10
 # input image dimensions
-img_rows, img_cols = 28, 28
+img_rows, img_cols = 120, 30 #28,28
 # number of convolutional filters to use
 nb_filters = 32
 # size of pooling area for max pooling
@@ -22,9 +23,17 @@ kernel_size = (3, 3)
 
 # the data, shuffled and split between train and test sets
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
+#print('X_test',X_test)
+#print('y_test',y_test)
+X_train,train_listName=PicToArray.getPicArray('D:\AI\pythonPack\pic120_30\\')
+y_train=(0,1,2,3,4,5,6,7,8,9);
+X_test, test_listName=PicToArray.getPicArray('D:\AI\pythonPack\pic120_30_test\\')
+y_test=(5,7,9)
+print('x=',X_test)
+
 
 '''
-print('X_train',X_train)
+print('X_train',X_train.shape)
 print('y_train',y_train)
 print('X_test',X_test)
 print('y_test',y_test)
@@ -87,3 +96,13 @@ model.fit(X_train, Y_train, batch_size=batch_size, epochs=epochs,
 score = model.evaluate(X_test, Y_test, verbose=0)
 print('Test score:', score[0])
 print('Test accuracy:', score[1])
+
+model.save('picExcise.ckpt');
+#model.predict()
+#print(X_test)
+classes = model.predict(X_test)
+print('classes',classes)
+# proba = model.predict_proba(X_test[1])
+# print('proba',proba)
+
+
